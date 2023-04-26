@@ -14,7 +14,7 @@ def generate_asymmetric_keys() -> tuple:
     keys = rsa.generate_private_key(public_exponent=65537, key_size=2048)
     private_key = keys
     public_key = keys.public_key()
-    logging.info('Сгенерированы ключи асимметричного шифрования')
+    logging.info(' Сгенерированы ключи асимметричного шифрования')
     return private_key, public_key
 
 
@@ -27,7 +27,7 @@ def encrypt_asymmetric(public_key, text: bytes) -> bytes:
     """
     encrypted_text = public_key.encrypt(text, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
                                                            algorithm=hashes.SHA256(), label=None))
-    logging.info('Текст зашифрован алгоритмом асимметричного шифрования')
+    logging.info(' Текст зашифрован алгоритмом асимметричного шифрования')
     return encrypted_text
 
 
@@ -40,5 +40,5 @@ def decrypt_asymmetric(private_key, text: bytes) -> bytes:
     """
     decrypted_text = private_key.decrypt(text, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
                                                             algorithm=hashes.SHA256(), label=None))
-    logging.info('Текст, зашифрованный алгоритмом асимметричного шифрования, расшифрован')
+    logging.info(' Текст, зашифрованный алгоритмом асимметричного шифрования, расшифрован')
     return decrypted_text
