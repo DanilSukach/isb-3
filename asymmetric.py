@@ -9,13 +9,13 @@ def generate_asymmetric_keys() -> tuple:
     return private_key, public_key
 
 
-def encrypt_asymmetric(text: bytes, public_key) -> bytes:
+def encrypt_asymmetric(public_key, text: bytes) -> bytes:
     encrypted_text = public_key.encrypt(text, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
                                                            algorithm=hashes.SHA256(), label=None))
     return encrypted_text
 
 
-def decrypt_asymmetric(text: bytes, private_key) -> bytes:
+def decrypt_asymmetric(private_key, text: bytes) -> bytes:
     decrypted_text = private_key.decrypt(text, padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
                                                             algorithm=hashes.SHA256(), label=None))
     return decrypted_text
