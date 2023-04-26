@@ -1,4 +1,3 @@
-import logging
 import os
 
 from cryptography.hazmat.primitives import padding
@@ -6,11 +5,21 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
 
 def generate_symmetric_key() -> str:
+    """
+    Функция генерирует ключ для симметричного шифрования
+    :return: ключ 
+    """
     key = os.urandom(16)
     return key
 
 
 def encrypt_symmetric(key: bytes, text: bytes) -> bytes:
+    """
+    Функция шифрует текст алгоритмом симметричного шифрования SM4
+    :param text: текст, который шифруем
+    :param key: ключ
+    :return: зашифрованный текст
+    """
     padder = padding.ANSIX923(128).padder()
     padded_text = padder.update(text) + padder.finalize()
     iv = os.urandom(16)
@@ -21,6 +30,12 @@ def encrypt_symmetric(key: bytes, text: bytes) -> bytes:
 
 
 def decrypt_symmetric(key: bytes, cipher_text: bytes) -> bytes:
+    """
+    Функция расшифровывает симметрично зашифрованный текст
+    :param cipher_text: зашифрованный текст
+    :param key: ключ
+    :return: возвращает расшифрованный текст
+    """
     cipher_text, iv = cipher_text[16:], cipher_text[:16]
     cipher = Cipher(algorithms.SM4(key), modes.CBC(iv))
     decryptor = cipher.decryptor()
