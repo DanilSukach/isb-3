@@ -8,18 +8,17 @@ SETTINGS_FILE = 'settings.json'
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-set', '--settings', type=str, help='Позволяет использовать собственный json-файл с указанием путей'
-                                                             '(Введите путь к файлу)')
+    parser.add_argument('-set', '--settings', default=SETTINGS_FILE, type=str, help='Позволяет использовать собственный json-файл с указанием путей'
+                        '(Введите путь к файлу)')
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-gen', '--generation',
+    group.add_argument('-gen', '--generation', action='store_true',
                        help='Запускает режим генерации ключей')
-    group.add_argument('-enc', '--encryption',
+    group.add_argument('-enc', '--encryption', action='store_true',
                        help='Запускает режим шифрования')
-    group.add_argument('-dec', '--decryption',
+    group.add_argument('-dec', '--decryption', action='store_true',
                        help='Запускает режим дешифрования')
     args = parser.parse_args()
-    settings = load_settings(
-        args.settings) if args.settings else load_settings(SETTINGS_FILE)
+    settings = load_settings(args.settings)
     if settings:
         if args.generation:
             symmetric_key = generate_symmetric_key()

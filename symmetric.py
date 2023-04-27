@@ -13,7 +13,8 @@ def generate_symmetric_key() -> str:
     :return: ключ 
     """
     key = os.urandom(16)
-    logging.info(' Сгенерирован ключ для симметричного шифрования')
+    logging.info(
+        ' Сгенерирован ключ для симметричного шифрования')
     return key
 
 
@@ -30,7 +31,8 @@ def encrypt_symmetric(key: bytes, text: bytes) -> bytes:
     cipher = Cipher(algorithms.SM4(key), modes.CBC(iv))
     encryptor = cipher.encryptor()
     cipher_text = encryptor.update(padded_text) + encryptor.finalize()
-    logging.info(' Текст зашифрован алгоритмом симметричного шифрования SM4')
+    logging.info(
+        ' Текст зашифрован алгоритмом симметричного шифрования SM4')
     return iv + cipher_text
 
 
